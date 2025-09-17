@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { PaymentFlow } from './PaymentFlow';
 import { 
   ShoppingCart, 
   Gift, 
@@ -9,10 +11,13 @@ import {
   Shield, 
   DollarSign, 
   Users,
-  ArrowRight 
+  ArrowRight,
+  CreditCard
 } from 'lucide-react';
 
 export function QuickActions() {
+  const [showPaymentDemo, setShowPaymentDemo] = useState(false);
+  
   const actions = [
     {
       title: 'Shop with GHO',
@@ -29,11 +34,11 @@ export function QuickActions() {
       href: '/rewards',
     },
     {
-      title: 'Earn Rewards',
-      description: 'Spend for Earn on Rewards',
-      icon: TrendingUp,
-      color: 'bg-purple-500',
-      href: '/earn',
+      title: 'x402 Payment Demo',
+      description: 'Test x402 payment flow with USDC',
+      icon: CreditCard,
+      color: 'bg-blue-500',
+      action: () => setShowPaymentDemo(true),
     },
   ];
 
@@ -76,6 +81,13 @@ export function QuickActions() {
               <div
                 key={index}
                 className="bg-bg/50 rounded-lg p-4 hover:bg-bg/70 transition-colors duration-200 cursor-pointer group"
+                onClick={() => {
+                  if (action.action) {
+                    action.action();
+                  } else if (action.href) {
+                    window.location.href = action.href;
+                  }
+                }}
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className={`w-10 h-10 ${action.color} rounded-lg flex items-center justify-center`}>
@@ -148,6 +160,35 @@ export function QuickActions() {
           Upgrade Now
         </Button>
       </Card>
+
+      {/* x402 Payment Demo Modal */}
+      {showPaymentDemo && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-bg rounded-xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-heading1 text-text-primary">x402 Payment Demo</h2>
+              <button
+                onClick={() => setShowPaymentDemo(false)}
+                className="text-text-secondary hover:text-text-primary transition-colors duration-200"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <PaymentFlow
+              amount="10.50"
+              recipient="0x742d35Cc6634C0532925a3b8D4C9db96590c6C8B"
+              description="Test x402 payment flow with USDC on Base"
+              onSuccess={(payment) => {
+                console.log('Payment successful:', payment);
+              }}
+              onError={(error) => {
+                console.error('Payment failed:', error);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
