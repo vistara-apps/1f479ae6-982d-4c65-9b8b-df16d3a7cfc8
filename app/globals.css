@@ -29,11 +29,11 @@
   }
   
   .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
+    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 active:scale-95;
   }
-  
+
   .btn-secondary {
-    @apply bg-surface hover:bg-surface/80 text-text-primary font-semibold py-3 px-6 rounded-lg border border-gray-700 transition-all duration-200 active:scale-95;
+    @apply bg-surface hover:bg-surface/80 text-text-primary font-semibold py-3 px-6 rounded-lg border border-gray-700 transition-all duration-300 active:scale-95;
   }
   
   .card {
