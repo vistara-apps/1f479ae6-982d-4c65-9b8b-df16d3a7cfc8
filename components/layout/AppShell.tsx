@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Menu, X, Shield, Bell, User, Settings } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, Shield, Bell, User, Settings, Home, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AppShellProps {
@@ -10,20 +10,37 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [hasUnreadAlerts, setHasUnreadAlerts] = useState(true);
+
+  // Close sidebar when clicking outside or on navigation
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: Shield, current: true },
-    { name: 'Positions', href: '/positions', icon: User, current: false },
-    { name: 'Alerts', href: '/alerts', icon: Bell, current: false },
+    { name: 'Dashboard', href: '/', icon: Home, current: true },
+    { name: 'Positions', href: '/positions', icon: Shield, current: false },
+    { name: 'Alerts', href: '/alerts', icon: AlertCircle, current: false, badge: hasUnreadAlerts },
     { name: 'Settings', href: '/settings', icon: Settings, current: false },
   ];
+
+  const handleNavClick = () => {
+    setSidebarOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-bg">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden animate-fade-in"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -55,15 +72,19 @@ export function AppShell({ children }: AppShellProps) {
             <a
               key={item.name}
               href={item.href}
+              onClick={handleNavClick}
               className={cn(
-                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200',
+                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative touch-manipulation',
                 item.current
-                  ? 'bg-primary text-white'
-                  : 'text-text-secondary hover:text-text-primary hover:bg-bg'
+                  ? 'bg-primary text-white shadow-lg'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-bg active:scale-95'
               )}
             >
               <item.icon className="w-5 h-5" />
-              {item.name}
+              <span className="flex-1">{item.name}</span>
+              {item.badge && (
+                <div className="w-2 h-2 bg-danger rounded-full animate-pulse" />
+              )}
             </a>
           ))}
         </nav>
@@ -72,21 +93,30 @@ export function AppShell({ children }: AppShellProps) {
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Top bar */}
-        <div className="sticky top-0 z-30 bg-bg/80 backdrop-blur-sm border-b border-gray-700">
+        <div className="sticky top-0 z-30 bg-bg/80 backdrop-blur-sm border-b" style={{ borderColor: 'hsl(var(--border))' }}>
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 hover:bg-surface rounded-lg transition-colors duration-200"
+              className="lg:hidden p-2 hover:bg-surface rounded-lg transition-all duration-200 active:scale-95 touch-manipulation"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5 text-text-primary" />
             </button>
             
             <div className="flex items-center gap-4">
-              <div className="relative">
-                <Bell className="w-5 h-5 text-text-secondary hover:text-text-primary cursor-pointer transition-colors duration-200" />
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-danger rounded-full"></div>
-              </div>
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full"></div>
+              <button 
+                className="relative p-2 hover:bg-surface rounded-lg transition-all duration-200 active:scale-95 touch-manipulation"
+                aria-label="View notifications"
+              >
+                <Bell className="w-5 h-5 text-text-secondary hover:text-text-primary transition-colors duration-200" />
+                {hasUnreadAlerts && (
+                  <div className="absolute top-1 right-1 w-2 h-2 bg-danger rounded-full animate-pulse" />
+                )}
+              </button>
+              <button 
+                className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full hover:scale-105 transition-transform duration-200 active:scale-95 touch-manipulation"
+                aria-label="User profile"
+              />
             </div>
           </div>
         </div>

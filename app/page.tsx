@@ -8,21 +8,27 @@ export default function HomePage() {
     <AppShell>
       <div className="space-y-6">
         {/* Hero Section with Wallet Connection */}
-        <section className="gradient-bg rounded-xl p-6 text-center space-y-4">
+        <section className="gradient-bg rounded-xl p-6 text-center space-y-4 animate-fade-in">
           <div className="space-y-2">
-            <h1 className="text-heading1 text-gradient">GHO Guardian</h1>
+            <h1 className="text-heading1 text-gradient animate-glow">GHO Guardian</h1>
             <p className="text-text-secondary">
               Navigate Aave GHO with confidence
             </p>
           </div>
-          <WalletConnection />
+          <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <WalletConnection />
+          </div>
         </section>
 
         {/* Dashboard Overview */}
-        <DashboardOverview />
+        <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <DashboardOverview />
+        </div>
 
         {/* Quick Actions */}
-        <QuickActions />
+        <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <QuickActions />
+        </div>
       </div>
     </AppShell>
   );

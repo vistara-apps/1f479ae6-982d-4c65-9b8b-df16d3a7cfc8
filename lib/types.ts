@@ -117,6 +117,7 @@ export interface CardProps {
   variant?: 'default' | 'highlight' | 'warning' | 'danger';
   className?: string;
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 export interface StatDisplayProps {

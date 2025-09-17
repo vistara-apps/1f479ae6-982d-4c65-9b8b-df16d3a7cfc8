@@ -3,13 +3,100 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Base colors */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    
+    /* Design system color tokens */
+    --primary: 220 70% 55%;
+    --primary-50: 220 70% 97%;
+    --primary-100: 220 70% 92%;
+    --primary-200: 220 70% 84%;
+    --primary-300: 220 70% 76%;
+    --primary-400: 220 70% 68%;
+    --primary-500: 220 70% 55%;
+    --primary-600: 220 70% 47%;
+    --primary-700: 220 70% 39%;
+    --primary-800: 220 70% 31%;
+    --primary-900: 220 70% 23%;
+    --primary-950: 220 70% 15%;
+    
+    --secondary: 210 40% 98%;
+    --secondary-50: 210 40% 98%;
+    --secondary-100: 210 40% 96%;
+    --secondary-200: 210 40% 92%;
+    --secondary-300: 210 40% 86%;
+    --secondary-400: 210 40% 74%;
+    --secondary-500: 210 40% 60%;
+    --secondary-600: 210 40% 46%;
+    --secondary-700: 210 40% 38%;
+    --secondary-800: 210 40% 32%;
+    --secondary-900: 210 40% 28%;
+    --secondary-950: 210 40% 18%;
+    
+    --accent: 170 70% 50%;
+    --accent-50: 170 70% 97%;
+    --accent-100: 170 70% 92%;
+    --accent-200: 170 70% 84%;
+    --accent-300: 170 70% 76%;
+    --accent-400: 170 70% 68%;
+    --accent-500: 170 70% 50%;
+    --accent-600: 170 70% 42%;
+    --accent-700: 170 70% 34%;
+    --accent-800: 170 70% 26%;
+    --accent-900: 170 70% 18%;
+    --accent-950: 170 70% 10%;
+    
+    --muted: 210 40% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 220 70% 55%;
+    
+    --chart-1: 220 70% 55%;
+    --chart-2: 170 70% 50%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    
+    --radius: 0.5rem;
+    
+    /* Custom app colors */
+    --bg: 240 10% 3.9%;
+    --surface: 240 10% 7%;
+    --text-primary: 0 0% 98%;
+    --text-secondary: 215 20.2% 65.1%;
+    --success: 142.1 76.2% 36.3%;
+    --warning: 47.9 95.8% 53.1%;
+    --danger: 0 62.8% 30.6%;
+    --info: 199.4 89.1% 48.4%;
+    
+    /* Typography scale */
+    --text-small: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --heading1: 2rem;
+    --heading2: 1.5rem;
+    --heading3: 1.25rem;
+    
+    /* Shadows */
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+  
   * {
-    @apply border-gray-700;
+    border-color: hsl(var(--border));
   }
   
   body {
     @apply bg-bg text-text-primary antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "Inter", system-ui, sans-serif;
   }
   
   html {
@@ -19,35 +106,49 @@
 
 @layer components {
   .gradient-bg {
-    background: linear-gradient(135deg, hsl(170 70% 50% / 0.1) 0%, hsl(220 70% 55% / 0.1) 100%);
+    background: linear-gradient(135deg, hsl(var(--accent) / 0.1) 0%, hsl(var(--primary) / 0.1) 100%);
   }
   
   .glass-effect {
     backdrop-filter: blur(12px);
-    background: hsl(220 20% 15% / 0.8);
-    border: 1px solid hsl(220 20% 25%);
+    background: hsl(var(--surface) / 0.8);
+    border: 1px solid hsl(var(--border));
   }
   
   .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
+    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
-    @apply bg-surface hover:bg-surface/80 text-text-primary font-semibold py-3 px-6 rounded-lg border border-gray-700 transition-all duration-200 active:scale-95;
+    @apply bg-surface hover:bg-surface/80 text-text-primary font-semibold py-3 px-6 rounded-lg border transition-all duration-200 active:scale-95;
+    border-color: hsl(var(--border));
   }
   
   .card {
-    @apply bg-surface rounded-xl p-6 shadow-card border border-gray-700/50;
+    @apply bg-surface rounded-xl p-6 shadow-card border;
+    border-color: hsl(var(--border) / 0.5);
   }
   
   .input-field {
-    @apply bg-bg border border-gray-700 rounded-lg px-4 py-3 text-text-primary placeholder-text-secondary focus:border-primary focus:outline-none transition-colors duration-200;
+    @apply bg-bg border rounded-lg px-4 py-3 text-text-primary placeholder-text-secondary focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200;
+    border-color: hsl(var(--border));
+  }
+  
+  .skeleton {
+    @apply animate-pulse rounded;
+    background-color: hsl(var(--muted));
+  }
+  
+  .loading-shimmer {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted) / 0.5) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, hsl(170 70% 50%), hsl(220 70% 55%));
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -57,12 +158,64 @@
     animation: glow 2s ease-in-out infinite alternate;
   }
   
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out;
+  }
+  
   @keyframes glow {
     from {
-      box-shadow: 0 0 20px hsl(170 70% 50% / 0.3);
+      box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
     }
     to {
-      box-shadow: 0 0 30px hsl(170 70% 50% / 0.6);
+      box-shadow: 0 0 30px hsl(var(--accent) / 0.6);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }

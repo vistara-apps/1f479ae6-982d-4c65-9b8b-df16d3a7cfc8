@@ -66,16 +66,18 @@ export function QuickActions() {
 
   return (
     <div className="space-y-6">
-      {/* Link our for GHO Section */}
+      {/* Spend GHO Section */}
       <Card className="bg-gradient-to-r from-surface to-surface/50">
         <div className="space-y-4">
-          <h2 className="text-heading1 text-text-primary">Link our for GHO</h2>
+          <h2 className="text-heading1 text-text-primary">Spend Your GHO</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {actions.map((action, index) => (
-              <div
+              <button
                 key={index}
-                className="bg-bg/50 rounded-lg p-4 hover:bg-bg/70 transition-colors duration-200 cursor-pointer group"
+                className="bg-bg/50 rounded-lg p-4 hover:bg-bg/70 transition-all duration-200 cursor-pointer group active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50 text-left w-full"
+                onClick={() => window.location.href = action.href}
+                aria-label={`${action.title}: ${action.description}`}
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className={`w-10 h-10 ${action.color} rounded-lg flex items-center justify-center`}>
@@ -87,7 +89,7 @@ export function QuickActions() {
                   <ArrowRight className="w-4 h-4 text-text-secondary group-hover:text-text-primary transition-colors duration-200" />
                 </div>
                 <p className="text-small text-text-secondary">{action.description}</p>
-              </div>
+              </button>
             ))}
           </div>
         </div>

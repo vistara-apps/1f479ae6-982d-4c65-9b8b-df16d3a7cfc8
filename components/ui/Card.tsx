@@ -4,7 +4,8 @@ import { CardProps } from '@/lib/types';
 export function Card({ 
   variant = 'default', 
   className = '', 
-  children 
+  children,
+  style
 }: CardProps) {
   const baseStyles = 'rounded-xl p-6 shadow-card border transition-all duration-200';
   
@@ -16,7 +17,7 @@ export function Card({
   };
 
   return (
-    <div className={cn(baseStyles, variants[variant], className)}>
+    <div className={cn(baseStyles, variants[variant], className)} style={style}>
       {children}
     </div>
   );

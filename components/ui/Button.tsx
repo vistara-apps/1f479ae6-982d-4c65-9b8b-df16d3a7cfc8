@@ -12,8 +12,8 @@ export function Button({
   className = '',
   type = 'button',
   ...props
-}: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed';
+}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background';
   
   const variants = {
     primary: 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl',
@@ -39,9 +39,11 @@ export function Button({
       )}
       disabled={disabled || loading}
       onClick={onClick}
+      aria-disabled={disabled || loading}
+      aria-busy={loading}
       {...props}
     >
-      {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+      {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden="true" />}
       {children}
     </button>
   );
