@@ -1,37 +1,48 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Wallet, User, Copy, ExternalLink } from 'lucide-react';
 import { formatAddress, copyToClipboard } from '@/lib/utils';
+import { useAccount, useConnect, useDisconnect, useBalance } from 'wagmi';
+import { base } from 'wagmi/chains';
 
 export function WalletConnection() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [address, setAddress] = useState('');
-  const [balance, setBalance] = useState('500');
+  const { address, isConnected } = useAccount();
+  const { connectors, connect, isPending } = useConnect();
+  const { disconnect } = useDisconnect();
+  const { data: balance } = useBalance({
+    address,
+    chainId: base.id,
+  });
 
   const handleConnect = async () => {
-    setIsConnecting(true);
-    
-    // Simulate wallet connection
-    setTimeout(() => {
-      setIsConnected(true);
-      setAddress('0x742d35Cc6634C0532925a3b8D4C9db96590c6C8B');
-      setIsConnecting(false);
-    }, 2000);
-  };
-
-  const handleCopyAddress = async () => {
-    const success = await copyToClipboard(address);
-    if (success) {
-      // Could show a toast notification here
-      console.log('Address copied to clipboard');
+    const coinbaseConnector = connectors.find(connector => 
+      connector.name.toLowerCase().includes('coinbase')
+    );
+    if (coinbaseConnector) {
+      connect({ connector: coinbaseConnector });
+    } else {
+      // Fallback to first available connector
+      connect({ connector: connectors[0] });
     }
   };
 
-  if (isConnected) {
+  const handleCopyAddress = async () => {
+    if (address) {
+      const success = await copyToClipboard(address);
+      if (success) {
+        // Could show a toast notification here
+        console.log('Address copied to clipboard');
+      }
+    }
+  };
+
+  const handleDisconnect = () => {
+    disconnect();
+  };
+
+  if (isConnected && address) {
     return (
       <Card variant="highlight" className="text-center space-y-4">
         <div className="flex items-center justify-center">
@@ -50,16 +61,30 @@ export function WalletConnection() {
             >
               <Copy className="w-4 h-4" />
             </button>
-            <button className="p-1 hover:bg-white/10 rounded transition-colors duration-200">
+            <button 
+              onClick={() => window.open(`https://basescan.org/address/${address}`, '_blank')}
+              className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
+            >
               <ExternalLink className="w-4 h-4" />
             </button>
           </div>
         </div>
 
         <div className="bg-black/20 rounded-lg p-4">
-          <div className="text-small text-text-secondary">GHO Balance</div>
-          <div className="text-heading1 text-text-primary font-bold">{balance} GHO</div>
+          <div className="text-small text-text-secondary">ETH Balance</div>
+          <div className="text-heading1 text-text-primary font-bold">
+            {balance ? `${parseFloat(balance.formatted).toFixed(4)} ${balance.symbol}` : '0.0000 ETH'}
+          </div>
         </div>
+
+        <Button
+          onClick={handleDisconnect}
+          variant="outline"
+          size="sm"
+          className="w-full"
+        >
+          Disconnect
+        </Button>
       </Card>
     );
   }
@@ -81,11 +106,11 @@ export function WalletConnection() {
 
       <Button
         onClick={handleConnect}
-        loading={isConnecting}
+        loading={isPending}
         className="w-full"
         size="lg"
       >
-        {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+        {isPending ? 'Connecting...' : 'Connect Wallet'}
       </Button>
     </Card>
   );

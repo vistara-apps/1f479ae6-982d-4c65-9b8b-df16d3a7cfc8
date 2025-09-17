@@ -99,7 +99,7 @@ export const SUPPORTED_ASSETS = {
   USDC: {
     symbol: 'USDC',
     name: 'USD Coin',
-    address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+    address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // Native USDC on Base
     decimals: 6,
     logoUrl: '/assets/usdc.png',
     coingeckoId: 'usd-coin',
