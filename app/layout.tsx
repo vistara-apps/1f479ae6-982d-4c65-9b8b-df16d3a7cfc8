@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: 'Borrow smarter, stay safe, and earn more with AI-powered DeFi assistance for Aave users.',
   keywords: ['DeFi', 'Aave', 'GHO', 'Avalanche', 'Lending', 'Borrowing'],
   authors: [{ name: 'GHO Guardian Team' }],
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#1a1a2e',
 };
 
