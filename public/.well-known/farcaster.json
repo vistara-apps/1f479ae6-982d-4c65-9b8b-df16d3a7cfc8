@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "GHO Guardian",
+    "subtitle": "Built with Zara",
+    "description": "GHO Guardian is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app",
+    "splashImageUrl": "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app/image.png",
+    "tagline": "GHO Guardian",
+    "screenshotUrls": [
+      "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app/screenshot.png",
+      "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://1f479ae6982d4c659b8bdf16d3a7cfc8-q610.vercel.app/api/webhook"
+  }
+}
