@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-700;
+  }
+  
+  body {
+    @apply bg-bg text-text-primary antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(170 70% 50% / 0.1) 0%, hsl(220 70% 55% / 0.1) 100%);
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: hsl(220 20% 15% / 0.8);
+    border: 1px solid hsl(220 20% 25%);
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-surface hover:bg-surface/80 text-text-primary font-semibold py-3 px-6 rounded-lg border border-gray-700 transition-all duration-200 active:scale-95;
+  }
+  
+  .card {
+    @apply bg-surface rounded-xl p-6 shadow-card border border-gray-700/50;
+  }
+  
+  .input-field {
+    @apply bg-bg border border-gray-700 rounded-lg px-4 py-3 text-text-primary placeholder-text-secondary focus:border-primary focus:outline-none transition-colors duration-200;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(170 70% 50%), hsl(220 70% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px hsl(170 70% 50% / 0.3);
+    }
+    to {
+      box-shadow: 0 0 30px hsl(170 70% 50% / 0.6);
+    }
+  }
+}
